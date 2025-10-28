@@ -1,0 +1,7 @@
+.game { display: grid; grid-template-columns: auto 1fr; gap: 16px; font-family: system-ui, Arial; padding: 16px; }
+.board-row { display: flex; }
+.square { width: 64px; height: 64px; font-size: 28px; font-weight: 700; display: grid; place-items: center; border: 1px solid #222; cursor: pointer; }
+.square--win { outline: 3px solid #000; }
+.status { margin-bottom: 8px; font-weight: 600; }
+.reset { margin-top: 10px; padding: 6px 10px; }
+.moves { margin: 0; padding-left: 18px; }
