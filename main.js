@@ -3,7 +3,10 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 // Scene + Background
 const scene = new THREE.Scene();
-const spaceTexture = new THREE.TextureLoader().load('images/galaxy.jpg');
+const spaceTexture = new THREE.TextureLoader().load(
+    `${import.meta.env.BASE_URL}images/galaxy.jpg`
+);
+spaceTexture.colorSpace = THREE.SRGBColorSpace;
 scene.background = spaceTexture;
 
 // Camera
@@ -14,8 +17,10 @@ const camera = new THREE.PerspectiveCamera(
     1000
 );
 
-
 const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.25;
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 
@@ -65,12 +70,19 @@ function addStar() {
 for (let i = 0; i < 400; i++) addStar();
 
 // Lights
-const hemi = new THREE.HemisphereLight(0xffffff, 0x223344, 0.6); // soft ambient from sky/ground
-scene.add(hemi);
+scene.add(new THREE.HemisphereLight(0xffffff, 0x101018, 0.8));
 
-const pointLight = new THREE.PointLight(0xffffff, 1.6);
-pointLight.position.set(20, 20, 10);
-scene.add(pointLight);
+const key = new THREE.DirectionalLight(0xffffff, 2.0);
+key.position.set(30, 40, 50);
+scene.add(key);
+
+const fill = new THREE.DirectionalLight(0xffffff, 0.8);
+fill.position.set(-25, 10, 10);
+scene.add(fill);
+
+const rim = new THREE.DirectionalLight(0xffffff, 0.6);
+rim.position.set(0, -20, -30);
+scene.add(rim);
 
 // Orbit Controls
 const controls = new OrbitControls(camera, renderer.domElement);
